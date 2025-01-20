@@ -3,14 +3,14 @@
 Here’s the step-by-step guide to design and implement an alert system that sends real-time notification for NBA game information to subscribed users via SMS or email. The project uses Amazon SNS, AWS Lambda, IAM least privilege, Amazon EventBridge, Python, and NBA APIs.
 
 Step 1: Understand the Requirements
-•	Goal: Deliver real-time NBA game day information to subscribed users.
-•	Delivery Channels: SMS/Email via Amazon SNS.
-•	Data Source: Use an NBA API (e.g., Sportsdata.io, or another sports API) for real-time game data.
-•	Cloud Services:
-- Amazon SNS: For sending notifications.
-- AWS Lambda: To process game data and send alerts.
-- Amazon EventBridge: To trigger Lambda functions at regular intervals.
-- IAM: For granting least privilege for security purpose.
+- Goal: Deliver real-time NBA game day information to subscribed users.
+- Delivery Channels: SMS/Email via Amazon SNS.
+- Data Source: Use an NBA API (e.g., Sportsdata.io, or another sports API) for real-time game data.
+- Cloud Services:
+  - Amazon SNS: For sending notifications.
+  - AWS Lambda: To process game data and send alerts.
+  - Amazon EventBridge: To trigger Lambda functions at regular intervals.
+  - IAM: For granting least privilege for security purpose.
 
 Step 2: Set Up Prerequisites
 1.	AWS Account: Ensure you have an AWS account with admin access.
