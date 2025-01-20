@@ -7,10 +7,10 @@ Step 1: Understand the Requirements
 •	Delivery Channels: SMS/Email via Amazon SNS.
 •	Data Source: Use an NBA API (e.g., Sportsdata.io, or another sports API) for real-time game data.
 •	Cloud Services:
-o	Amazon SNS: For sending notifications.
-o	AWS Lambda: To process game data and send alerts.
-o	Amazon EventBridge: To trigger Lambda functions at regular intervals.
-o	IAM: For granting least privilege for security purpose.
+- Amazon SNS: For sending notifications.
+- AWS Lambda: To process game data and send alerts.
+- Amazon EventBridge: To trigger Lambda functions at regular intervals.
+- IAM: For granting least privilege for security purpose.
 
 Step 2: Set Up Prerequisites
 1.	AWS Account: Ensure you have an AWS account with admin access.
