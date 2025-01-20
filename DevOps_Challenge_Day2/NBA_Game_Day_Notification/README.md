@@ -16,10 +16,10 @@ Step 2: Set Up Prerequisites
 1.	AWS Account: Ensure you have an AWS account with admin access.
 2.	NBA API Key: Sign up for an NBA API provider and get an API key.
 3.	IAM Role with Least Privileges:
-o	Create an IAM role for Lambda with the following policies:
-	Custom Policy (copy and paste the policy from the GitHub Repo).
-	AWSLambdaBasicExecutionRole.
-o	Apply the least privilege principle by restricting resources to only what’s required.
+- Create an IAM role for Lambda with the following policies:
+  -	Custom Policy (copy and paste the policy from the GitHub Repo).
+  - AWSLambdaBasicExecutionRole.
+- Apply the least privilege principle by restricting resources to only what’s required.
 
 Step 3: Create an SNS Topic
 1.	Go to Amazon SNS in the AWS Management Console.
