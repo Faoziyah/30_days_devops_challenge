@@ -1,4 +1,4 @@
-# Sports API Management System
+# Containerized SportS API Configuration
 
 ## **Project Overview**
 This project demonstrates building a containerized API management system for querying sports data. It leverages **Amazon ECS (Fargate)** for running containers, **Amazon API Gateway** for exposing REST endpoints, and an external **Sports API** for real-time sports data. The project showcases advanced cloud computing practices, including API management, container orchestration, and secure AWS integrations.
@@ -19,11 +19,6 @@ This project demonstrates building a containerized API management system for que
 - **AWS CLI Installed and Configured**: Install & configure AWS CLI to programatically interact with AWS
 - **Serpapi Library**: Install Serpapi library in local environment "pip install google-search-results"
 - **Docker CLI and Desktop Installed**: To build & push container images
-
----
-
-## **Technical Architecture**
-![Brown Minimalist Lifestyle Daily Vlog YouTube Thumbnail (2)](https://github.com/user-attachments/assets/32e49fe6-df16-40cb-b262-af1478cf01d5)
 
 ---
 
@@ -53,8 +48,8 @@ sports-api-management/
 
 ### **Clone the Repository**
 ```bash
-git clone https://github.com/ifeanyiro9/containerized-sports-api.git
-cd containerized-sports-api
+git clone https://github.com/Faoziyah/30_days_devops_challenge.git
+cd DevOps_Challenge_Day4/containerized-sports-api
 ```
 ### **Create ECR Repo**
 ```bash
@@ -72,65 +67,84 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-a
 
 ### **Set Up ECS Cluster with Fargate**
 1. Create an ECS Cluster:
-- Go to the ECS Console → Clusters → Create Cluster
-- Name your Cluster (sports-api-cluster)
-- For Infrastructure, select Fargate, then create Cluster
+Create a folder and name it (e.g. containerized-sport-api)
+Open it with vs code
+Clone the repository: git clone https://…
+Change directory to the folder: Cd  containerized-sport-api
+Create a repository in ECR with name and region: …
+Login to the ECR, change the Account ID to your AWS Account ID:…
+Build the image (the build process is stated in the Dockerfile): …
+Name the built image by tagging it
+Push the image to ECR
 
-2. Create a Task Definition:
-- Go to Task Definitions → Create New Task Definition
-- Name your task definition (sports-api-task)
-- For Infrastructure, select Fargate
-- Add the container:
-  - Name your container (sports-api-container)
-  - Image URI: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/sports-api:sports-api-latest
-  - Container Port: 8080
-  - Protocol: TCP
-  - Port Name: Leave Blank
-  - App Protocol: HTTP
-- Define Environment Eariables:
-  - Key: SPORTS_API_KEY
-  - Value: <YOUR_SPORTSDATA.IO_API_KEY>
-  - Create task definition
-3. Run the Service with an ALB
-- Go to Clusters → Select Cluster → Service → Create.
-- Capacity provider: Fargate
-- Select Deployment configuration family (sports-api-task)
-- Name your service (sports-api-service)
-- Desired tasks: 2
-- Networking: Create new security group
-- Networking Configuration:
-  - Type: All TCP
-  - Source: Anywhere
-- Load Balancing: Select Application Load Balancer (ALB).
-- ALB Configuration:
- - Create a new ALB:
- - Name: sports-api-alb
- - Target Group health check path: "/sports"
- - Create service
-4. Test the ALB:
-- After deploying the ECS service, note the DNS name of the ALB (e.g., sports-api-alb-<AWS_ACCOUNT_ID>.us-east-1.elb.amazonaws.com)
-- Confirm the API is accessible by visiting the ALB DNS name in your browser and adding /sports at end (e.g, http://sports-api-alb-<AWS_ACCOUNT_ID>.us-east-1.elb.amazonaws.com/sports)
+Go to AWS Management console to confirm the ECR and the image
 
-### **Configure API Gateway**
-1. Create a New REST API:
-- Go to API Gateway Console → Create API → REST API
-- Name the API (e.g., Sports API Gateway)
+In the console search for ECS in the search bar
+Choose Amazon Elastic Container Service (ECS) 
+Click on Cluster, then Create Cluster
+Name the cluster 
+Leave other filds as default 
+Click on Create cluster
 
-2. Set Up Integration:
-- Create a resource /sports
-- Create a GET method
-- Choose HTTP Proxy as the integration type
-- Enter the DNS name of the ALB that includes "/sports" (e.g. http://sports-api-alb-<AWS_ACCOUNT_ID>.us-east-1.elb.amazonaws.com/sports
+Click on task definitions
+Click on create new task definitions
+Name the task in the task definition family field (eg. Sport-api-task)
+Infrastructure Requirement: Choose AWS Fargate
+Scroll down to container 
+Name the container(e.g. sport-api-container)
+Copy and paste the uri of the ECR image to the Image URI field
+Container port: 8080
+Scroll down to Environment variables and input your environment variables sush as the SERP API and the SERP URL
+Scroll down and click Create Task Definition
 
-3. Deploy the API:
-- Deploy the API to a stage (e.g., prod)
-- Note the endpoint URL
+Click on Clusters
+Click on the Cluster we created 
+Click the Services Tab and click Create (to create a service)
+Scroll down to family and choose the task name
+Input the Service name (e.g. sport-api-service)
+Service type: Replica
+Desired tasks: 2
+Scroll down, under Networking, click Create new Security group
+Under Inbound rules for Security groups, Type: All TCP, Source: Anywhere
+Scroll down to Load balancing and choose Use Load Balancing
+Choose type as Application Load Balancer
+Choose the created Container 
+Name the load balancer (e.g. Sport-api-alb)
+Under Listener choose Create new listener. Port: 80, Protocol: HTTP
+Health check path: /sports
+Click on Create
 
-### **Test the System**
-- Use curl or a browser to test:
-```bash
-curl https://<api-gateway-id>.execute-api.us-east-1.amazonaws.com/prod/sports
-```
+Go to EC2 dashboard to confirm the ALB is created 
+Copy the ALB DNS and paste it in your browser to view the app
+
+In the Management Console, Search for API Gateway in the search bar
+Choose API Gateway
+Click on Create API
+Choose REST API
+Name it (e.g. sport-api)
+Click create
+Click on create Resource
+Input the resource path: /sports and click Create
+Click on Create Method
+Type: GET
+Integration type: HTTP
+Turn on Http proxy integration
+HTTP method: GET
+Endpoint URL: copy and paste the endpoint of the ALB and add /sports
+Click  Create Method
+
+Click on Deploy API
+Stage: new stage
+State name: Dev
+Click on Deploy
+Copy the invoke url of the API and paste in your browser to confirm
+
+NB: Don’t forget to delete all created resources
+Delete Sport API
+Delete ALB
+Delete ECR
+Delete ECS (De-register the Task definition, click on the Cluster, click on update the service and change the replica from 2 to 0, Delete service, and Delete cluster)
+
 
 ### **What We Learned**
 Setting up a scalable, containerized application with ECS
